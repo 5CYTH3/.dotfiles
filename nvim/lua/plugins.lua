@@ -13,31 +13,76 @@ vim.opt.rtp:prepend(lazypath)
 
 local plugins = {
 		'neovim/nvim-lspconfig',		
-		{ 
-				'akai54/2077.nvim',
-				lazy = false,
-				priority = 1000,
-				config = function()
-						vim.cmd [[colorscheme 2077]]
-						vim.termguicolors = true
-						vim.g.airline_theme = 'cyberpunk'
-				end
-		},
-		--{
-		--		'mrcjkb/haskell-tools.nvim',
-		--		version = '^3', -- Recommended
-		--		ft = { 'haskell', 'lhaskell', 'cabal', 'cabalproject' },
-		--},
+		'samueljoli/cyberpunk.nvim',
+		'hrsh7th/nvim-cmp',
+		'hrsh7th/cmp-nvim-lsp',
+		'L3MON4D3/LuaSnip',
     {
-    'nvim-telescope/telescope.nvim', tag = '0.1.4',
+				'nvim-telescope/telescope.nvim', tag = '0.1.4',
 				dependencies = { 'nvim-lua/plenary.nvim' }
     },
+		'nvim-tree/nvim-tree.lua',
+		'nvim-treesitter/nvim-treesitter',
+		'nvim-tree/nvim-web-devicons',
+		{
+				'rust-lang/rust.vim',
+				ft = "rust",
+				init = function ()
+						vim.g.rustfmt_autosave = 1
+				end
+		},
+		{
+				'nvim-lualine/lualine.nvim',
+					dependencies = { 'nvim-tree/nvim-web-devicons' }
+		},
+		'jubnzv/virtual-types.nvim',
+		'lervag/vimtex',
+		
 }
 
 local opts = {}
 
 require("lazy").setup(plugins, opts)
 
-require'lspconfig'.ocamllsp.setup{}
-require'lspconfig'.hls.setup{}
-require'lspconfig'.clangd.setup{}
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
+require('cyberpunk').setup {
+		theme = 'dark'
+}
+require('lspconfig').ocamllsp.setup{
+		capabilities = capabilities,
+		on_attach = require('virtualtypes').on_attach()
+}
+
+require('lspconfig').hls.setup{
+		capabilities = capabilities,
+}
+require('lspconfig').clangd.setup{
+		capabilities = capabilities,
+		on_attach = require('virtualtypes').on_attach()
+}
+
+require('lspconfig').rust_analyzer.setup({
+		capabilities = capabilities,
+		on_attach = require('virtualtypes').on_attach(),
+		filetypes = {"rust"},
+		settings = {
+				["rust-analyzer"] = {
+						cargo = {
+								allFeatures = true,
+						}
+				}
+		}
+})
+
+require('nvim-tree').setup()
+require('nvim-treesitter.configs').setup({
+		ensure_installed = { 'c', 'rust', 'ocaml', 'lua', 'haskell'},
+		highlight = {
+				enable = true	
+		}
+})
+
+require('telescope').setup()
+require('lualine').setup()
+
