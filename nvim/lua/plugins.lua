@@ -36,7 +36,12 @@ local plugins = {
 					dependencies = { 'nvim-tree/nvim-web-devicons' }
 		},
 		'jubnzv/virtual-types.nvim',
-		'lervag/vimtex',
+		{
+				'lervag/vimtex',
+				init = function ()
+						vim.g.vimtex_view_method = 'zathura'
+				end
+		},
 		
 }
 
