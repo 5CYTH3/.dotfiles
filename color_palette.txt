@@ -1,0 +1,3 @@
+Primary red : #ce6254
+Secondary blue : #4dafa4
+
