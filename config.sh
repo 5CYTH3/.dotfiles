@@ -6,5 +6,4 @@ ln -s ~/.dotfiles/fish ~/.config/fish
 ln -s ~/.dotfiles/hypr ~/.config/hypr
 ln -s ~/.dotfiles/kitty ~/.config/kitty
 ln -s ~/.dotfiles/rofi ~/.config/rofi
-ln -s ~/.dotfiles/omf ~/.config/omf
-
+ln -s ~/.dotfiles/eww ~/.config/eww
