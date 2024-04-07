@@ -1,12 +1,35 @@
-(defwindow example
+(defwidget ram []
+		(box :class "centered" :orientation "h" :space-evenly true :halign "center"
+				(label :text "${round(EWW_RAM.used_mem_perc, 1)}%")))
+
+(defwidget batt []
+		(box :orientation "h" :space-evenly true :halign "center"
+				(label :text "${EWW_BATTERY.capacity}%")))
+
+(defwidget time []
+  (box :orientation "h" :space-evenly true :halign "center"
+    (label :text "OUUIII")))
+
+(defwidget leftside []
+    (time))
+
+(defwidget bar []
+
+  (centerbox :orientation "h"
+    (batt)
+    (ram)
+    (label :text "HELLO")))
+
+(defwindow bar
            :monitor 0
            :geometry (geometry :x "0%"
-                               :y "20px"
-                               :width "90%"
-                               :height "30px"
+                               :y "10px"
+                               :width "99%"
+                               :height "40px"
                                :anchor "top center")
            :stacking "fg"
+					 :exclusive true
            :reserve (struts :distance "40px" :side "top")
            :windowtype "dock"
            :wm-ignore false
-  "example content")
+  (bar))

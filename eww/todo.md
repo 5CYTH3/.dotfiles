@@ -1,0 +1,5 @@
+- [ ] Battery
+- [ ] RAM
+- [ ] Audio
+- [ ] Time
+- [ ] LAN / Bluetooth

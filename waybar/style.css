@@ -10,6 +10,7 @@ window#waybar {
     color: #ffffff;
     transition-property: background-color;
     transition-duration: .5s;
+		background: linear-gradient(135deg, #ce6254 0%, #ce6254 1%, transparent 1%, transparent 95%); 
 }
 
 window#waybar.hidden {

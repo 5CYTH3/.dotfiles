@@ -24,6 +24,7 @@ local plugins = {
 		'nvim-tree/nvim-tree.lua',
 		'nvim-treesitter/nvim-treesitter',
 		'nvim-tree/nvim-web-devicons',
+		'elkowar/yuck.vim',
 		{
 				'rust-lang/rust.vim',
 				ft = "rust",
