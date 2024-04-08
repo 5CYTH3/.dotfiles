@@ -1,24 +1,25 @@
 (defwidget ram []
-		(box :class "centered" :orientation "h" :space-evenly true :halign "center"
-				(label :text "${round(EWW_RAM.used_mem_perc, 1)}%")))
+		(box :class "ram" :orientation "h" 
+        :halign "end"
+          (label :text "${round(EWW_RAM.used_mem_perc, 1)}%")))
 
-(defwidget batt []
-		(box :orientation "h" :space-evenly true :halign "center"
-				(label :text "${EWW_BATTERY.capacity}%")))
+(defpoll time :interval "1s"
+  `date +%H:%M:%S`)
 
-(defwidget time []
-  (box :orientation "h" :space-evenly true :halign "center"
-    (label :text "OUUIII")))
+(defwidget timebox []
+  (label :orientation "h" :halign "start" :class "time" :text time))
 
 (defwidget leftside []
-    (time))
+    (timebox))
+
+(defwidget rightside []
+  (box :class "rightside" :orientation "h" :halign "end" (ram) (systray)))
 
 (defwidget bar []
-
-  (centerbox :orientation "h"
-    (batt)
-    (ram)
-    (label :text "HELLO")))
+  (box :orientation "h" 
+    (leftside)
+    (label :text "HACKING IN PROCESS...")
+    (rightside)))
 
 (defwindow bar
            :monitor 0
