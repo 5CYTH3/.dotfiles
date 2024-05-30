@@ -1,8 +1,0 @@
-.bar {
-    border: 1px solid #ce6254;
-		position: relative;
-}
-
-.bar::after {
-		
-}

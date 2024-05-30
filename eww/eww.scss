@@ -24,3 +24,18 @@
 .rightside {
 		margin-right: 10px;
 }
+
+scale trough {
+		all: unset;
+		background-color: #22242b;
+		border-radius: 2px;
+		min-height: 10px;
+		min-width: 70px;
+		margin: 0px 0px 0px 0px;
+
+}
+
+.volbar trough highlight {
+		background-color: #ce6254;
+		border-radius: 2px;
+}

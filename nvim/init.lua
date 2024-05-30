@@ -10,7 +10,3 @@ require 'plugin_config.completions'
 require 'keybindings'
 
 vim.termguicolors = true
-
-local builtin = require('telescope.builtin')
-
-vim.keymap.set('n', '<leader>ff', builtin.find_files, {})

@@ -12,7 +12,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 local plugins = {
-		'neovim/nvim-lspconfig',		
+		'neovim/nvim-lspconfig',
 		'samueljoli/cyberpunk.nvim',
 		'hrsh7th/nvim-cmp',
 		'hrsh7th/cmp-nvim-lsp',
@@ -24,7 +24,10 @@ local plugins = {
 		'nvim-tree/nvim-tree.lua',
 		'nvim-treesitter/nvim-treesitter',
 		'nvim-tree/nvim-web-devicons',
-		'elkowar/yuck.vim',
+		{
+				'elkowar/yuck.vim',
+				ft = "yuck"
+		},
 		{
 				'rust-lang/rust.vim',
 				ft = "rust",
@@ -41,37 +44,48 @@ local plugins = {
 				'lervag/vimtex',
 				init = function ()
 						vim.g.vimtex_view_method = 'zathura'
-				end
+						vim.g.tex_flavor = 'latex'
+						vim.opt.conceallevel = 1
+						vim.g.tex_conceal = 'abdmg'
+						vim.g.vimtex_view_forward_search_on_start = false
+				end,
+				ft = "tex"
 		},
-		
 }
 
 local opts = {}
 
 require("lazy").setup(plugins, opts)
 
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
+local cmp_capabilities = require('cmp_nvim_lsp').default_capabilities()
+
+local lsp = require('lspconfig')
 
 require('cyberpunk').setup {
 		theme = 'dark'
 }
-require('lspconfig').ocamllsp.setup{
-		capabilities = capabilities,
-		on_attach = require('virtualtypes').on_attach()
+
+lsp.ocamllsp.setup{
+		capabilities = cmp_capabilities,
+		on_attach = require('virtualtypes').on_attach,
+		root_dir = lsp.util.root_pattern("*.opam", "esy.json", "package.json", ".git", "dune-project", "dune-workspace", ".spm-project")
 }
 
-require('lspconfig').hls.setup{
-		capabilities = capabilities,
-}
-require('lspconfig').clangd.setup{
-		capabilities = capabilities,
-		on_attach = require('virtualtypes').on_attach()
+lsp.hls.setup{
+		capabilities = cmp_capabilities,
+		on_attach = require('virtualtypes').on_attach
 }
 
-require('lspconfig').rust_analyzer.setup({
-		capabilities = capabilities,
-		on_attach = require('virtualtypes').on_attach(),
-		filetypes = {"rust"},
+lsp.clangd.setup{
+		capabilities = cmp_capabilities,
+		on_attach = require('virtualtypes').on_attach
+}
+
+-- Requires system package `rls` and the rustup toolchain
+lsp.rust_analyzer.setup({
+		capabilities = cmp_capabilities,
+		on_attach = require('virtualtypes').on_attach,
+		filetypes = { "rust" },
 		settings = {
 				["rust-analyzer"] = {
 						cargo = {
@@ -81,14 +95,24 @@ require('lspconfig').rust_analyzer.setup({
 		}
 })
 
+-- Requires system package `lua-language-server`
+lsp.lua_ls.setup {
+		settings = {
+				Lua = {
+						diagnostics = {
+								globals = { "vim" }
+						}
+				}
+		}
+}
+
 require('nvim-tree').setup()
 require('nvim-treesitter.configs').setup({
-		ensure_installed = { 'c', 'rust', 'ocaml', 'lua', 'haskell'},
+		ensure_installed = { 'c', 'rust', 'ocaml', 'lua', 'haskell' },
 		highlight = {
-				enable = true	
+				enable = true
 		}
 })
 
 require('telescope').setup()
 require('lualine').setup()
-
