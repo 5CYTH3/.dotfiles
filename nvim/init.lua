@@ -5,8 +5,10 @@ vim.opt.number = true
 
 vim.opt.rtp:append("/home/scythe/.opam/default/share/ocp-indent/vim")
 
-require 'plugins'
-require 'plugin_config.completions'
-require 'keybindings'
+require 'config.lazy'
+require 'config.completions'
+require 'config.langs'
+
+require 'config.keybindings'
 
 vim.termguicolors = true
