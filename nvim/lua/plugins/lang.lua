@@ -30,5 +30,10 @@ return {
 						vim.g.vimtex_view_forward_search_on_start = false
 				end,
 				ft = "tex"
+		},
+		{
+				'mrcjkb/haskell-tools.nvim',
+				version = '^3', -- Recommended
+				lazy = false, -- This plugin is already lazy
 		}
 }
