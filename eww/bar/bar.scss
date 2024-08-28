@@ -1,0 +1,37 @@
+.bar {
+    border: 1px solid #ce6254;
+    background-color: transparent;
+		background: linear-gradient(135deg, #ce6254 0%, #ce6254 1%, transparent 1%, transparent 95%); 
+		font-family: 'Blender Pro'
+}
+
+.time {
+		margin-left: 25px;
+		font-size: 2em;
+		font-weight: 700;
+		color: #4dafa4;
+}
+
+.ram {
+		font-weight: 700;
+		color: #ce6254;
+}
+
+.rightside {
+		margin-right: 10px;
+}
+
+scale trough {
+		all: unset;
+		background-color: #22242b;
+		border-radius: 2px;
+		min-height: 10px;
+		min-width: 70px;
+		margin: 0px 0px 0px 0px;
+
+}
+
+.volbar trough highlight {
+		background-color: #ce6254;
+		border-radius: 2px;
+}

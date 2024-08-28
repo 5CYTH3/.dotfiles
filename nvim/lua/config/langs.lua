@@ -43,6 +43,8 @@ lsp.lua_ls.setup {
 	}
 }
 
+lsp.tsserver.setup {}
+
 require('nvim-treesitter.configs').setup({
 	ensure_installed = { 'c', 'rust', 'ocaml', 'lua', 'haskell' },
 	highlight = {

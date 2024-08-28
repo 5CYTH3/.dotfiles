@@ -1,0 +1,41 @@
+.bar {
+    border: 1px solid #ce6254;
+    background-color: transparent;
+		background: linear-gradient(135deg, #ce6254 0%, #ce6254 1%, transparent 1%, transparent 95%); 
+		font-family: 'Blender Pro';
+}
+
+.time {
+		margin-left: 25px;
+		font-size: 2em;
+		font-weight: 700;
+		color: #4dafa4;
+}
+
+.rhs {
+		margin-right: 25px;
+}
+
+.vol_slider {
+		color: #ce6254;
+		border-radius: 2px;
+		min-height: 10px;
+		min-width: 70px;
+}
+
+.vol_slider trough {
+		background-color: #22242b;
+		border-color: #22242b;
+		border-radius: 2px;
+}
+
+/* The slider in itself (the cursor) */
+.vol_slider trough slider {
+		min-width: 10px;
+}
+
+.vol_slider trough highlight {
+		border-color: #ce6254;
+		background-color: #ce6254;
+}
+
