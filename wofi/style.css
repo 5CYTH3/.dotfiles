@@ -1,0 +1,30 @@
+window {
+		border: 1px solid #CE6254;
+		font-family: 'Blender Pro';
+		font-weight: 400;
+		background-color: rgba(19, 14, 18, 1);
+}
+
+#outer-box {
+		border: 1px solid #CE6254;
+}
+
+#entry {
+		background-color: rgba(19, 14, 18, 1);
+		padding: 10px;
+}
+
+#text {
+		color: rgba(77, 175, 164, 1); /* Neon blue #4DAFA4 */
+}
+
+#input {
+		background-color: rgba(19, 14, 18, 1);
+		color: #4DAFA4;
+		border: 1px solid #CE6254;
+}
+
+#entry:selected {
+		background-color: rgba(77, 175, 164, 0.7);
+		border 1px solid #4DAFA4;
+}

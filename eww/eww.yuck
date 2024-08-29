@@ -1,4 +1,0 @@
-(include "bar/bar.yuck")
-(include "notifications/notifications.yuck")
-
-; Basically need to redo everything using AGS (but its JS :( )

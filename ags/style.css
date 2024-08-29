@@ -5,15 +5,33 @@
 		font-family: 'Blender Pro';
 }
 
+
+/* NEON BUTTON UTIL */
+.neon_button {
+		all: unset;
+		min-width: 60px;
+		border-radius: 0;
+		background-color: transparent;
+		background: none;
+    border: 1px solid #4dafa4;
+}
+
+.neon_button:hover {
+		background-color: rgba(77, 175, 164, 0.4)
+}
+
+.neon_button > label {
+		margin-top: 5px;
+		margin-bottom: 5px;
+		color: #4dafa4;
+		background-color: transparent;
+}
+
 .time {
 		margin-left: 25px;
 		font-size: 2em;
 		font-weight: 700;
 		color: #4dafa4;
-}
-
-.rhs {
-		margin-right: 25px;
 }
 
 .vol_slider {
@@ -37,5 +55,19 @@
 .vol_slider trough highlight {
 		border-color: #ce6254;
 		background-color: #ce6254;
+}
+
+.rhs {
+		margin-right: 25px;
+}
+
+.drawer {
+		background-color: rgba(28, 28, 28, 0.9);
+    border: 1px solid #ce6254;
+}
+
+.battery {
+		color: #ce6254;
+		font-weight: 700;
 }
 
