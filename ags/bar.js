@@ -23,7 +23,7 @@ export const Bar = (/** @type {number} */ monitor) => Widget.Window({
     anchor: ['top', 'left', 'right'],
     exclusivity: 'exclusive',
 		class_name: 'bar',
-		margins: [10, 9],
+		margins: [10, 9, 0, 9],
     child: Widget.CenterBox({
         start_widget: Widget.Label({
 						class_name: 'time',

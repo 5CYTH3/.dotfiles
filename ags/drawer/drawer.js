@@ -24,7 +24,7 @@ export const Drawer = (monitor = 0) => Widget.Window({
     anchor: ['top', 'right'],
     exclusivity: 'exclusive',
 		class_name: 'drawer',
-		margins: [0, 10],
+		margins: [10, 10, 0, 10],
     child: Widget.Box({
 				margin: 15,
 				hpack: 'center',
