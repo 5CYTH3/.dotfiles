@@ -4,19 +4,21 @@ local lsp = require('lspconfig')
 
 lsp.ocamllsp.setup{
 	capabilities = cmp_capabilities,
-	on_attach = require('virtualtypes').on_attach,
+	on_attach = require'virtualtypes'.on_attach,
 	root_dir = lsp.util.root_pattern("*.opam", "esy.json", "package.json", ".git", "dune-project", "dune-workspace", ".spm-project")
 }
 
-lsp.hls.setup{
-	capabilities = cmp_capabilities,
-	on_attach = require('virtualtypes').on_attach
+lsp.hls.setup {
+		capabilities = cmp_capabilities,
+		on_attach = require('virtualtypes').on_attach
 }
 
-lsp.clangd.setup{
-	capabilities = cmp_capabilities,
-	on_attach = require('virtualtypes').on_attach
+lsp.ccls.setup {
+		capabilities = cmp_capabilities,
+		on_attach = require('virtualtypes').on_attach,
+		root_dir = lsp.util.root_pattern(".ccls", ".spm-project")
 }
+
 
 -- Requires system package `rls` and the rustup toolchain
 lsp.rust_analyzer.setup({
@@ -51,3 +53,7 @@ require('nvim-treesitter.configs').setup({
 		enable = true
 	}
 })
+
+lsp.texlab.setup {
+		capabilities = cmp_capabilities
+}

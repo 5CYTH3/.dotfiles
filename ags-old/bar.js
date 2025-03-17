@@ -1,5 +1,3 @@
-// https://docs.gtk.org/gtk3/css-overview.html
-
 import { drawer_visibility } from "./drawer/drawer.js";
 
 /* TIME WIDGETS
@@ -15,8 +13,7 @@ const time = Variable('', {
     }],
 })
 
-/* BAR 
- * */
+/* BAR */
 export const Bar = (/** @type {number} */ monitor) => Widget.Window({
     monitor,
     name: `bar${monitor}`,
@@ -30,11 +27,8 @@ export const Bar = (/** @type {number} */ monitor) => Widget.Window({
             hpack: 'start',
             label: time.bind(),
         }),
-				center_widget: Widget.Label({
-						margin: 13,
-						label: 'NETRUNNER PORTAL -- 1.1.0'
-				}),
-        end_widget: Rhs(),
+				center_widget: Center(),
+				end_widget: Rhs(),
     }),
 })
 
@@ -49,6 +43,7 @@ const Rhs = () => Widget.Box({
 		children: [
 				Widget.Fixed({
 						child: Widget.Button({
+								margin: 6,
 								vexpand: false,
 								class_name: 'neon_button',
 								on_clicked: () => drawer_visibility.value = !drawer_visibility.value,
@@ -64,3 +59,18 @@ const Rhs = () => Widget.Box({
 				})
 		]
 })
+
+const mpris = await Service.import('mpris');
+
+//const { track_artists, track_title } = player;
+//label.label = `${track_artists.join(', ')} - ${track_title}`;
+const Center = () => Widget.Label({
+		margin: 13,
+		label: mpris.bind('players').as(pl => pl.length != 0 ? pl.map(p => AudioPlayer(p)) :
+				"CABLE CONNECTION LOST")
+})
+
+const AudioPlayer = (player) => {
+		const { track_artists, track_title } = player;
+		return `${track_artists.join(', ')} - ${track_title}`;
+}

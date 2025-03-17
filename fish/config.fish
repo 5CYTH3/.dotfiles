@@ -10,3 +10,8 @@ set PATH "$HOME/.cabal/bin:$HOME/.ghcup/bin" $PATH
 set PATH $PATH /home/scythe/.local/bin
 
 alias zathura="zathura --fork"
+alias ls="exa --icons --long"
+
+# bun
+set --export BUN_INSTALL "$HOME/.bun"
+set --export PATH $BUN_INSTALL/bin $PATH

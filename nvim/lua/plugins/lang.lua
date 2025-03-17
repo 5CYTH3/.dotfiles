@@ -2,7 +2,7 @@ return {
 		'neovim/nvim-lspconfig',
 		'hrsh7th/nvim-cmp',
 		'hrsh7th/cmp-nvim-lsp',
-		'L3MON4D3/LuaSnip',	
+		'L3MON4D3/LuaSnip',
 		{
 				'nvim-treesitter/nvim-treesitter',
 				opts = {
@@ -16,7 +16,7 @@ return {
 		{
 				'rust-lang/rust.vim',
 				ft = "rust",
-				init = function ()
+				config = function ()
 						vim.g.rustfmt_autosave = 1
 				end
 		},

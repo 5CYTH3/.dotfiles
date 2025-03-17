@@ -1,0 +1,96 @@
+// https://gitlab.gnome.org/GNOME/gtk/-/blob/gtk-3-24/gtk/theme/Adwaita/_colors-public.scss
+$fg-color: #{"@theme_fg_color"};
+$bg-color: #{"@theme_bg_color"};
+
+window.Bar {
+    border: 1px solid #ce6254;
+    background-color: transparent;
+		background: linear-gradient(135deg, #ce6254 0%, #ce6254 1%, transparent 1%, transparent 95%); 
+		font-family: 'Blender Pro';
+    margin: 10px;
+
+    .bar-container {
+        margin: 5px 0;
+
+        .Time {
+            margin-left: 25px;
+            font-size: 2em;
+            font-weight: 700;
+            color: #4dafa4;
+        }
+
+        .Rhs {
+            margin-right: 25px;
+            .Button {
+                /* NEON BUTTON UTIL */
+                all: unset;
+                min-width: 60px;
+                border-radius: 0;
+                background-color: transparent;
+                background: none;
+                border: 1px solid #4dafa4;
+
+                &:hover {
+                    background-color: rgba(77, 175, 164, 0.4)
+                }
+
+                label {
+                    margin-top: 5px;
+                    margin-bottom: 5px;
+                    color: #4dafa4;
+                    background-color: transparent;
+                }
+            }
+
+            .Battery {
+                color: #ce6254;
+                font-weight: 700;
+                margin-left: 15px;
+            }
+        }
+        
+
+    }
+
+    button {
+        border-radius: 8px;
+        margin: 2px;
+    }
+}
+
+
+
+.vol_slider {
+		color: #ce6254;
+		border-radius: 2px;
+		min-height: 10px;
+		min-width: 70px;
+}
+
+.vol_slider trough {
+		background-color: #22242b;
+		border-color: #22242b;
+		border-radius: 2px;
+}
+
+/* The slider in itself (the cursor) */
+.vol_slider trough slider {
+		min-width: 10px;
+}
+
+.vol_slider trough highlight {
+		border-color: #ce6254;
+		background-color: #ce6254;
+}
+
+.rhs {
+		
+}
+
+.drawer {
+		background-color: rgba(28, 28, 28, 0.9);
+    border: 1px solid #ce6254;
+		min-width: 200px;
+}
+
+

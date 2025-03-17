@@ -3,6 +3,7 @@ vim.opt.shiftwidth=4
 vim.opt.expandtab = false
 vim.opt.number = true
 vim.opt.clipboard="unnamedplus"
+vim.nohlsearch = true
 
 vim.opt.rtp:append("/home/scythe/.opam/default/share/ocp-indent/vim")
 

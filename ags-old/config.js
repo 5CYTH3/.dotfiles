@@ -10,3 +10,4 @@ App.config({
 		],
 		style: './style.css'
 })
+

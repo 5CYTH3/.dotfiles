@@ -18,6 +18,14 @@ window {
 		color: rgba(77, 175, 164, 1); /* Neon blue #4DAFA4 */
 }
 
+#img {
+		margin-right: 5px;
+		margin-left: 3px;
+		margin-top: 3px;
+		margin-bottom: 3px;
+		size: 10px;
+}
+
 #input {
 		background-color: rgba(19, 14, 18, 1);
 		color: #4DAFA4;
