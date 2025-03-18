@@ -15,7 +15,7 @@ export default function ControlCenter(gdkmonitor: Gdk.Monitor) {
         anchor={TOP | RIGHT}
         application={App}
 		>
-				<centerbox cssClasses={[""]} hexpand vexpand>
+				<centerbox cssClasses={[""]} hexpand vexpand orientation={1}>
 						<label>Control Center</label>
 						<box>
 								
@@ -30,9 +30,9 @@ export default function ControlCenter(gdkmonitor: Gdk.Monitor) {
 }
 
 function ControlNode({ item }: { item: Tray.TrayItem }) {
-		return <box>
+		return <box vertical>
 				<image iconName={item.get_icon_name()} />
-				<box>
+				<box vertical>
 						<label>{item.get_title()}</label>
 						<label>{item.get_status()}</label>
 
