@@ -19,4 +19,11 @@ To get the bare minimum packages needed in the distro, I use `archinstall` decla
 - nvim
 - oh-my-fish
 - steam
-- 
+- Anytype
+- Zed
+- Localsend
+- Inkscape
+- Gimp
+- Zathura
+- Thunar
+- Libreoffice
