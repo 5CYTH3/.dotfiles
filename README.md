@@ -8,13 +8,15 @@ To get the bare minimum packages needed in the distro, I use `archinstall` decla
 
 ## List of packages :
 - rustup
-- firefox/zen
-- hyprland
+- zen
 - hyprpicker
 - grimblast (screenshot)
+- wl-copy
 - kitty
-- rofi
+- wofi
 - eww
 - fish
 - nvim
 - oh-my-fish
+- steam
+- 
