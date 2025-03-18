@@ -1,6 +1,7 @@
 import { App, Astal, Gtk, Gdk, Widget } from "astal/gtk4"
 import { bind, GLib, Variable } from "astal"
 import Battery from "gi://AstalBattery"
+import { cc_visible } from "./utils";
 
 const now = () =>
   GLib.DateTime.new_now_local().format("%H:%M:%S");
@@ -15,7 +16,7 @@ function Center() {
 function Rhs() {
 		let bat = Battery.get_default();
 		return <box hexpand halign={Gtk.Align.END} cssClasses={["Rhs"]} >
-				<button cssClasses={["Button"]}>
+				<button onClicked={() => cc_visible.set(!cc_visible.get())} cssClasses={["Button"]}>
 						<label>Menu</label>
 				</button>
 				<label cssClasses={["Battery"]}>{bind(bat, "percentage").as(p => `${Math.floor(p * 100)}%`)}</label>
