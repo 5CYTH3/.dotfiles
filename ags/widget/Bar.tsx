@@ -28,7 +28,7 @@ function MediaPlayer({ player }: { player: Mpris.Player | undefined }) {
 						: "media-playback-start-symbolic",
 		);
 
-		return <box hexpand>
+		return <box>
 				<label label={ title } />
 				<label label=" | " />
 				<label label={ artist } />
@@ -60,7 +60,7 @@ export default function Bar(gdkmonitor: Gdk.Monitor) {
         anchor={TOP | LEFT | RIGHT}
         application={App}
 		>
-				<centerbox cssClasses={["bar-container"]} vexpand 
+				<centerbox cssClasses={["bar-container"]} vexpand hexpand
 						start_widget={
 								<label hexpand halign={Gtk.Align.START} cssClasses={["Time"]} label={time(now)}/>
 						}
