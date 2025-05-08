@@ -1,36 +1,34 @@
-import { App, Astal, Gtk, Gdk } from "astal/gtk4"
-import { bind, GLib, Variable } from "astal"
+import { App, Astal, Gtk, Gdk, Widget } from "astal/gtk4"
+import { bind, Binding, GLib, Variable } from "astal"
 import Battery from "gi://AstalBattery"
 import ControlCenter from "./ControlCenter";
 import Mpris from "gi://AstalMpris";
 
-const mpris = Mpris.get_default();
 
 const now = () =>
-  GLib.DateTime.new_now_local().format("%H:%M:%S");
+  GLib.DateTime.new_now_local().format("%H:%M:%S") || "ERROR";
 
 const time = 
 		Variable(GLib.DateTime.new_now_local()).poll(1000, () => GLib.DateTime.new_now_local());
 
-function Center() {
-		return bind(mpris, "players").as((players) => 
-				players.length > 0 
-						? <MediaPlayer player={players[0]}/> 
-						: <label>NO PLAYERS</label>
+function MediaCenter(): Binding<Gtk.Widget> {
+		const mpris = Mpris.get_default();
+		return bind(mpris, "players").as((ps) => 
+				<MediaPlayer player={ps[0]}/>
 		);
 }
+function MediaPlayer({ player }: { player: Mpris.Player | undefined }) {
+		if (!player) return <box/>;
 
-function MediaPlayer({ player }: { player: Mpris.Player }) {
-		if (!player) return <label>NO PLAYER</label>
 		const title = bind(player, "title").as((t) => t || "Unknown Track");
 		const artist = bind(player, "artist").as((a) => a || "Unknown Artist");
 		const playIcon = bind(player, "playback_status").as((s) =>
 				s === Mpris.PlaybackStatus.PLAYING
-					? "media-playback-pause-symbolic"
-					: "media-playback-start-symbolic",
+						? "media-playback-pause-symbolic"
+						: "media-playback-start-symbolic",
 		);
 
-		return <box>
+		return <box hexpand>
 				<label label={ title } />
 				<label label=" | " />
 				<label label={ artist } />
@@ -60,11 +58,14 @@ export default function Bar(gdkmonitor: Gdk.Monitor) {
         gdkmonitor={gdkmonitor}
         exclusivity={Astal.Exclusivity.EXCLUSIVE}
         anchor={TOP | LEFT | RIGHT}
-        application={App}>
-        <centerbox cssClasses={["bar-container"]} hexpand vexpand>
-            <label hexpand halign={Gtk.Align.START} cssClasses={["Time"]}>{time(now)}</label>
-						<Center></Center>
-						<Rhs></Rhs>
-        </centerbox>
+        application={App}
+		>
+				<centerbox cssClasses={["bar-container"]} vexpand 
+						start_widget={
+								<label hexpand halign={Gtk.Align.START} cssClasses={["Time"]} label={time(now)}/>
+						}
+						center_widget={MediaCenter()}
+						end_widget={<Rhs/>}
+				/>
     </window>
 }
