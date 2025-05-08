@@ -22,24 +22,28 @@ window.Bar {
         .Rhs {
             margin-right: 25px;
             .Button {
-                /* NEON BUTTON UTIL */
-                all: unset;
-                min-width: 60px;
-                border-radius: 0;
-                background-color: transparent;
-                background: none;
-                border: 1px solid #4dafa4;
-
-                &:hover {
-                    background-color: rgba(77, 175, 164, 0.4)
-                }
-
-                label {
-                    margin-top: 5px;
-                    margin-bottom: 5px;
-                    color: #4dafa4;
+                .toggle {
+                    /* NEON BUTTON UTIL */
+                    all: unset;
+                    min-width: 60px;
+                    border-radius: 0;
                     background-color: transparent;
+                    background: none;
+                    border: 1px solid #4dafa4;
+
+                    &:hover {
+                        background-color: rgba(77, 175, 164, 0.4)
+                    }
+
+                    .text-button {
+                        margin-top: 5px;
+                        margin-bottom: 5px;
+                        color: #4dafa4;
+                        background-color: transparent;
+                    }
+
                 }
+                
             }
 
             .Battery {
@@ -56,12 +60,27 @@ window.Bar {
         border-radius: 8px;
         margin: 2px;
     }
-}
 
-window.Control {
-    border: 1px solid #ce6254;
+    popover {
+        margin-top: 15px;
+        contents {
+            all: unset;
+            padding: 10px;
+            border: 1px solid #ce6254;
+            font-family: 'Blender Pro';
+            .Control {
+                color: white;
+                .audio {
+                    .dev {
+                        .icon {
+                            margin-right: 10px;
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
-
 
 .vol_slider {
 		color: #ce6254;

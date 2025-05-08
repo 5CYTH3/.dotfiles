@@ -1,41 +1,41 @@
 import { bind } from "astal";
-import { App, Astal, Gtk, Gdk, Widget } from "astal/gtk4"
 import Tray from "gi://AstalTray"
-import { cc_visible } from "./utils"
+import AstalTray from "gi://AstalTray?version=0.1";
+
+import { AudioCenter } from "./control_center/Audio"
 
 const tray = Tray.get_default();
 
-export default function ControlCenter(gdkmonitor: Gdk.Monitor) {
-    const { TOP, LEFT, RIGHT } = Astal.WindowAnchor;
-		return <window 
-				visible = { bind(cc_visible) }
-        cssClasses={["Control"]}
-        gdkmonitor={gdkmonitor}
-        exclusivity={Astal.Exclusivity.EXCLUSIVE}
-        anchor={TOP | RIGHT}
-        application={App}
-		>
-				<centerbox cssClasses={[""]} hexpand vexpand orientation={1}>
-						<label>Control Center</label>
-						<box>
-								
-						</box>
-						<box>
-						{
-								bind(tray, "items").as((items) => items.map(i => <ControlNode item={i} />))
-						}
-						</box>
-				</centerbox>
-		</window>
-}
-
-function ControlNode({ item }: { item: Tray.TrayItem }) {
-		return <box vertical>
-				<image iconName={item.get_icon_name()} />
-				<box vertical>
-						<label>{item.get_title()}</label>
-						<label>{item.get_status()}</label>
-
+export default function ControlCenter() {
+		return <box vertical cssClasses={["Control"]}>			
+				<label>Control Center</label>
+				<AudioCenter/>
+				<box>
+				{
+						bind(tray, "items").as((items) => items.map(i => <ControlNode item={i} />))
+				}
 				</box>
 		</box>
+}
+
+const processStatus = (s: AstalTray.Status) => {
+		if (s == AstalTray.Status.PASSIVE) {
+				return 'PASSIVE'
+		} else if (s == AstalTray.Status.ACTIVE) {
+				return 'ACTIVE'
+		} else if (s == AstalTray.Status.NEEDS_ATTENTION) {
+				return 'ATTENTION'
+		} else {
+				return 'PROCESS ERR' 
+		}
+} 
+
+function ControlNode({ item }: { item: Tray.TrayItem }) {
+		return <button onClicked={self => { bind(item, "activate").as(s => s(0, 0)) }}>
+				<box vertical>
+						<label>{bind(item, "title")}</label>
+						<label>{bind(item, "status").as(s => processStatus(s))}</label>
+						<image iconName={bind(item, "iconName")} />
+				</box>
+		</button>
 }

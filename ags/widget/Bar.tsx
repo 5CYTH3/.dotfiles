@@ -1,7 +1,10 @@
-import { App, Astal, Gtk, Gdk, Widget } from "astal/gtk4"
+import { App, Astal, Gtk, Gdk } from "astal/gtk4"
 import { bind, GLib, Variable } from "astal"
 import Battery from "gi://AstalBattery"
-import { cc_visible } from "./utils";
+import ControlCenter from "./ControlCenter";
+import Mpris from "gi://AstalMpris";
+
+const mpris = Mpris.get_default();
 
 const now = () =>
   GLib.DateTime.new_now_local().format("%H:%M:%S");
@@ -10,15 +13,40 @@ const time =
 		Variable(GLib.DateTime.new_now_local()).poll(1000, () => GLib.DateTime.new_now_local());
 
 function Center() {
-		return <label>CABLE CONNECTION LOST</label>
+		return bind(mpris, "players").as((players) => 
+				players.length > 0 
+						? <MediaPlayer player={players[0]}/> 
+						: <label>NO PLAYERS</label>
+		);
+}
+
+function MediaPlayer({ player }: { player: Mpris.Player }) {
+		if (!player) return <label>NO PLAYER</label>
+		const title = bind(player, "title").as((t) => t || "Unknown Track");
+		const artist = bind(player, "artist").as((a) => a || "Unknown Artist");
+		const playIcon = bind(player, "playback_status").as((s) =>
+				s === Mpris.PlaybackStatus.PLAYING
+					? "media-playback-pause-symbolic"
+					: "media-playback-start-symbolic",
+		);
+
+		return <box>
+				<label label={ title } />
+				<label label=" | " />
+				<label label={ artist } />
+				<image margin_start={10} icon_name={playIcon} />
+		</box>
 }
 
 function Rhs() {
 		let bat = Battery.get_default();
 		return <box hexpand halign={Gtk.Align.END} cssClasses={["Rhs"]} >
-				<button onClicked={() => cc_visible.set(!cc_visible.get())} cssClasses={["Button"]}>
+				<menubutton cssClasses={["Button"]}>
 						<label>Menu</label>
-				</button>
+						<popover has_arrow={false}>
+								<ControlCenter />
+						</popover>
+				</menubutton>
 				<label cssClasses={["Battery"]}>{bind(bat, "percentage").as(p => `${Math.floor(p * 100)}%`)}</label>
 		</box>
 }
