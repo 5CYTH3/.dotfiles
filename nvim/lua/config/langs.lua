@@ -13,7 +13,7 @@ lsp.hls.setup {
 		on_attach = require('virtualtypes').on_attach
 }
 
-lsp.ccls.setup {
+lsp.clangd.setup {
 		capabilities = cmp_capabilities,
 		on_attach = require('virtualtypes').on_attach,
 		root_dir = lsp.util.root_pattern(".ccls", ".spm-project")

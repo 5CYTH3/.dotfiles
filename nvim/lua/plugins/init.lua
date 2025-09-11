@@ -31,4 +31,8 @@ return {
             theme = 'dark'
         }
     },
+		{
+				'stevearc/conform.nvim',
+				opts = {}
+		}
 }

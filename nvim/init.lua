@@ -13,4 +13,6 @@ require 'config.langs'
 
 require 'config.keybindings'
 
+require 'config.conform'
+
 vim.termguicolors = true
