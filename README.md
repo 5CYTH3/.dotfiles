@@ -7,7 +7,6 @@ To get the bare minimum packages needed in the distro, I use `archinstall` decla
 > The archinstall script has not been fully reviewed. Do not use while this message is present.
 
 ## List of packages :
-- rustup
 - zen
 - hyprpicker
 - grimblast (screenshot)
@@ -25,3 +24,7 @@ To get the bare minimum packages needed in the distro, I use `archinstall` decla
 - Zathura
 - Thunar
 - Libreoffice
+
+### Dev Env
+For my ddevelopment environments, I use devcontainers using `devpod`, as well as `podman` as a docker alternative.
+I also use DevDocs for my documentation.
