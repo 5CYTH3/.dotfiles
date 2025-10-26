@@ -13,16 +13,14 @@ To get the bare minimum packages needed in the distro, I use `archinstall` decla
 - grimblast (screenshot)
 - wl-copy
 - kitty
-- wofi
-- eww
+- rofi
+- ags / astal
 - fish
 - nvim
 - oh-my-fish
 - steam
-- Anytype
 - Zed
 - Localsend
-- Inkscape
 - Gimp
 - Zathura
 - Thunar

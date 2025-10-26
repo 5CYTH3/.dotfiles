@@ -1,23 +1,47 @@
 import Wp from "gi://AstalWp"
-import { bind } from "astal";
+import { Accessor, createBinding, For, With } from "ags";
+import { Gtk } from "ags/gtk4";
+import AstalWp from "gi://AstalWp?version=0.1";
 
 const wp = Wp.get_default() as Wp.Wp;
 const audio = wp.audio;
 
 export function AudioCenter() {
-		return <box vertical cssClasses={["audio"]}>
-				<label>devices: { bind(audio, "devices").as(devices => devices.map(d => d.get_active_profile())) }</label>
-				<> { bind(audio, "default_speaker").as(s => <AudioDevice speakers={s}/>) } </>
+		const b_default_speaker = createBinding(audio, "default_speaker");
+		const b_devices = createBinding(audio, "devices");
+		return <box margin_top={10} orientation={Gtk.Orientation.VERTICAL} cssClasses={["audio"]}>
+				<With value={b_default_speaker}>
+						{(s) => <AudioDevice speaker={s} />}
+				</With>
+				<For each={b_devices}>
+						{(device: AstalWp.Device) => <label label={device.get_description()} />}
+				</For>
 		</box>
 }
 
-function AudioDevice({ speakers }: { speakers: Wp.Endpoint }): JSX.Element {
-		return <box vertical cssClasses={["dev"]}>
+function AudioDevice({ speaker }: { speaker: Wp.Endpoint }): JSX.Element {
+		const b_name = createBinding(speaker, "name");
+		const b_volume = createBinding(speaker, "volume");
+		return <box orientation={Gtk.Orientation.VERTICAL} cssClasses={["dev"]}>
 				<box>
-						<image cssClasses={["icon"]} iconName={speakers.icon}/>
-						<label>{ bind(speakers, "name") }</label>
+						<image class="icon" iconName={speaker.get_icon()}/>
+						<With value={b_name}>
+								{(name) => <label label={name} />}
+						</With>
 				</box>
-				<label>{ bind(speakers, "volume").as(v => `Volume: ${Math.floor(v * 100)}%`) }</label>
-				<slider hexpand min={0.0} onChangeValue={ (self) => speakers.volume = self.value } value={ bind(speakers, "volume") } />
+				<With value={b_volume}>
+						{(volume) => <label label={`Volume: ${Math.floor(volume * 100)}%`}/>}
+				</With>
+				<With value={b_volume}>
+						{(volume) => 
+								<slider 
+										class="vol_slider" 
+										hexpand 
+										min={0.0} 
+										onChangeValue={ (self) => speaker.set_volume(self.value) }
+										value={ volume } 
+								/>
+						}
+				</With>
 		</box>
 }

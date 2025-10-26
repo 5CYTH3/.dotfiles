@@ -1,71 +1,85 @@
-import { App, Astal, Gtk, Gdk, Widget } from "astal/gtk4"
-import { bind, Binding, GLib, Variable } from "astal"
 import Battery from "gi://AstalBattery"
 import ControlCenter from "./ControlCenter";
 import Mpris from "gi://AstalMpris";
+import { createPoll } from "ags/time";
+import GLib from "gi://GLib?version=2.0";
+import { Astal, Gdk, Gtk } from "ags/gtk4";
+import { Accessor, createBinding, With } from "gnim";
+import app from "ags/gtk4/app";
 
 
 const now = () =>
   GLib.DateTime.new_now_local().format("%H:%M:%S") || "ERROR";
 
-const time = 
-		Variable(GLib.DateTime.new_now_local()).poll(1000, () => GLib.DateTime.new_now_local());
-
-function MediaCenter(): Binding<Gtk.Widget> {
-		const mpris = Mpris.get_default();
-		return bind(mpris, "players").as((ps) => 
-				<MediaPlayer player={ps[0]}/>
-		);
-}
 function MediaPlayer({ player }: { player: Mpris.Player | undefined }) {
 		if (!player) return <box/>;
 
-		const title = bind(player, "title").as((t) => t || "Unknown Track");
-		const artist = bind(player, "artist").as((a) => a || "Unknown Artist");
-		const playIcon = bind(player, "playback_status").as((s) =>
+		const b_title = createBinding(player, "title")((t) => t || "Unknown Track");
+		const b_artist = createBinding(player, "artist")((a) => a || "Unknown Artist");
+		const b_play_icon = createBinding(player, "playback_status")((s) =>
 				s === Mpris.PlaybackStatus.PLAYING
 						? "media-playback-pause-symbolic"
 						: "media-playback-start-symbolic",
 		);
 
 		return <box>
-				<label label={ title } />
-				<label label=" | " />
-				<label label={ artist } />
-				<image margin_start={10} icon_name={playIcon} />
+				<With value={(b_title)}>
+						{(title) => <label label={title}/>}
+				</With>
+				<label label=" | "/>
+				<With value={(b_artist)}>
+						{(artist) => <label label={artist}/>}
+				</With>
+				<With value={b_play_icon}>
+						{(icon) => <image margin_start={10} icon_name={icon} />}
+				</With>
 		</box>
 }
 
 function Rhs() {
 		let bat = Battery.get_default();
+		const b_battery = createBinding(bat, "percentage")(p => `${Math.floor(p * 100)}%`);
 		return <box hexpand halign={Gtk.Align.END} cssClasses={["Rhs"]} >
 				<menubutton cssClasses={["Button"]}>
-						<label>Menu</label>
+						<label label="Menu" />
 						<popover has_arrow={false}>
 								<ControlCenter />
 						</popover>
 				</menubutton>
-				<label cssClasses={["Battery"]}>{bind(bat, "percentage").as(p => `${Math.floor(p * 100)}%`)}</label>
+				<With value={b_battery}>
+						{(value) => <label class="Battery" label={value} />}
+				</With>
 		</box>
 }
 
 export default function Bar(gdkmonitor: Gdk.Monitor) {
     const { TOP, LEFT, RIGHT } = Astal.WindowAnchor
+		const time = createPoll("", 1000, "date");
 
+		const mpris = Mpris.get_default();
+		const b_players = createBinding(mpris, "players");
     return <window
         visible
-        cssClasses={["Bar"]}
+				name="Bar"
+        class="Bar"
         gdkmonitor={gdkmonitor}
         exclusivity={Astal.Exclusivity.EXCLUSIVE}
         anchor={TOP | LEFT | RIGHT}
-        application={App}
+        application={app}
 		>
-				<centerbox cssClasses={["bar-container"]} vexpand hexpand
-						start_widget={
-								<label hexpand halign={Gtk.Align.START} cssClasses={["Time"]} label={time(now)}/>
-						}
-						center_widget={MediaCenter()}
-						end_widget={<Rhs/>}
-				/>
+				<centerbox class="bar-container" vexpand hexpand>
+						<box $type="start">
+								<With value={time}>
+										{(t) => <label class="Time" label={t} />}
+								</With>
+						</box>
+						<box $type="center">
+								<With value={b_players}>
+										{ (players) => <MediaPlayer player={players[0]}/> }
+								</With>
+						</box>
+						<Rhs $type="end" />
+				</centerbox>
+
     </window>
 }

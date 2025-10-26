@@ -43,19 +43,18 @@ window.Bar {
                     }
 
                 }
-                
+
             }
 
-            .Battery {
-                color: #ce6254;
-                font-weight: 700;
-                margin-left: 15px;
-            }
         }
-        
 
+        .Battery {
+            color: #ce6254;
+            font-weight: 700;
+            margin-left: 15px;
+        }
     }
-
+        
     button {
         border-radius: 8px;
         margin: 2px;
@@ -63,6 +62,7 @@ window.Bar {
 
     popover {
         margin-top: 15px;
+        background-color: black;
         contents {
             all: unset;
             padding: 10px;
@@ -82,27 +82,30 @@ window.Bar {
     }
 }
 
-.vol_slider {
-		color: #ce6254;
-		border-radius: 2px;
-		min-height: 10px;
-		min-width: 70px;
-}
 
-.vol_slider trough {
-		background-color: #22242b;
-		border-color: #22242b;
-		border-radius: 2px;
-}
+scale {
+    /* Background unselected bar */
+    trough {
+        background-color: #363a3a;
+        padding: 0;
+        border: none;
+        min-height: 4px;
+        min-width: 100px;
 
-/* The slider in itself (the cursor) */
-.vol_slider trough slider {
-		min-width: 10px;
-}
+        /* Cursor of the slide */
+        slider {
+            min-height: 10px;
+            min-width: 18px;
+            border-radius: 5px;
+            background-color: #ce6254;
+            margin: -5px 0;
+        }
+        /* Selected bar */
+        highlight {
+            background-color: #ce6254;
+        }
+    }
 
-.vol_slider trough highlight {
-		border-color: #ce6254;
-		background-color: #ce6254;
 }
 
 .rhs {

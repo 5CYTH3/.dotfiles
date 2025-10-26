@@ -1,19 +1,23 @@
-import { bind } from "astal";
+import { createBinding, For, With } from "ags";
 import Tray from "gi://AstalTray"
 import AstalTray from "gi://AstalTray?version=0.1";
 
 import { AudioCenter } from "./control_center/Audio"
+import { NetworkCenter } from "./control_center/Network";
+import { Gtk } from "ags/gtk4";
 
 const tray = Tray.get_default();
 
 export default function ControlCenter() {
-		return <box vertical cssClasses={["Control"]}>			
-				<label>Control Center</label>
+		const b_tray = createBinding(tray, "items");
+		return <box orientation={Gtk.Orientation.VERTICAL} cssClasses={["Control"]}>			
+				<label label="Control Center"/>
 				<AudioCenter/>
+				<NetworkCenter/>
 				<box>
-				{
-						bind(tray, "items").as((items) => items.map(i => <ControlNode item={i} />))
-				}
+						<For each={b_tray}>
+								{(item) => <ControlNode item={item} />}
+						</For>
 				</box>
 		</box>
 }
@@ -31,11 +35,23 @@ const processStatus = (s: AstalTray.Status) => {
 } 
 
 function ControlNode({ item }: { item: Tray.TrayItem }) {
-		return <button onClicked={self => { bind(item, "activate").as(s => s(0, 0)) }}>
-				<box vertical>
-						<label>{bind(item, "title")}</label>
-						<label>{bind(item, "status").as(s => processStatus(s))}</label>
-						<image iconName={bind(item, "iconName")} />
+		const b_title = createBinding(item, "title");
+		const b_status = createBinding(item, "status");
+		const b_icon_name = createBinding(item, "icon_name");
+		
+		const b_activate = createBinding(item, "activate");
+
+		return <button onClicked={self => { b_activate(s => s(0, 0)) }}>
+				<box orientation={Gtk.Orientation.VERTICAL}>
+						<With value={b_title}>
+								{(v) => <label label={v}/>}
+						</With>
+						<With value={b_status}>
+								{(v) => <label label={processStatus(v)}/> }
+						</With>
+						<With value={b_icon_name}>
+								{(i) => <image icon_name={i} />}
+						</With>
 				</box>
 		</button>
 }

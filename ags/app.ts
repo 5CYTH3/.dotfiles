@@ -1,14 +1,12 @@
-import { App } from "astal/gtk4"
+import app from "ags/gtk4/app"
 import style from "./style.scss"
 import Bar from "./widget/Bar"
 import ControlCenter from "./widget/ControlCenter"
-import { Variable } from "astal"
 
-
-App.start({
-    css: style,
-    main() {
-        App.get_monitors().map(Bar);
-				App.get_monitors().map(ControlCenter)
-    },
+app.start({
+  css: style,
+  main() {
+    app.get_monitors().map(Bar)
+		app.get_monitors().map(ControlCenter)
+  },
 })
